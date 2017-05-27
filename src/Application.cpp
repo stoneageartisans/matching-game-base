@@ -37,7 +37,7 @@ bool Application::OnEvent( const SEvent& EVENT )
                         {
                             Tile* tile = tiles[button_id];
                             tile->reveal_object( textures_hidden[tile->get_hidden_object()] );
-                            selection_state ++;
+                            //selection_state ++;
                         }
                     }
             }
@@ -118,7 +118,7 @@ void Application::initialize_assets()
     u32 total = ( u32 ) OBJECT_TOTAL;
     for( u32 i = 0; i < total; i ++ )
     {
-        textures_hidden[i] = video_driver->getTexture( OBJECT_IMAGE[i] );
+        textures_hidden[i] = video_driver->getTexture( OBJECT_IMAGES[i] );
     }
 }
 
@@ -194,6 +194,7 @@ void Application::initialize_irrlicht( SIrrlichtCreationParameters* PARAMETERS )
 {
     irrlicht_device = createDeviceEx( *PARAMETERS );
     irrlicht_device->setEventReceiver( this );
+    
     video_driver = irrlicht_device->getVideoDriver();
     scene_manager = irrlicht_device->getSceneManager();
     gui_environment = irrlicht_device->getGUIEnvironment();
@@ -204,6 +205,20 @@ void Application::initialize_irrlicht( SIrrlichtCreationParameters* PARAMETERS )
 
 void Application::initialize_tiles()
 {
+    u32 hidden_objects[TOTAL_TILES];
+    
+    for( u32 i = 0, obj = 0; i < TOTAL_TILES; i ++ )
+    {
+        hidden_objects[i] = obj;
+        obj ++;
+        if( obj == OBJECT_TOTAL )
+        {
+            obj = 0;
+        }
+    }
+    
+    shuffle( hidden_objects, TOTAL_TILES );
+    
     IAnimatedMesh* mesh = scene_manager->getMesh( TILE_PLANE );
     
     u32 i = 0;
@@ -221,7 +236,7 @@ void Application::initialize_tiles()
                                                                      i,
                                                                      vector3df( x, y, ( TILE_Z + z_offset ) ),
                                                                      vector3df( 0, 0, 180.0 ) ), // Blender flipped the .3ds z-axis
-                                    column ), // Replace this with a randomly generated object
+                                    hidden_objects[i] ),
                           i ); 
             tiles[i]->get_node()->setMaterialType( EMT_TRANSPARENT_ALPHA_CHANNEL );
             tiles[i]->get_node()->setMaterialFlag( EMF_LIGHTING, true );
@@ -290,5 +305,18 @@ void Application::run()
         scene_manager->drawAll();
         gui_environment->drawAll();
         video_driver->endScene();
+    }
+}
+
+void Application::shuffle( u32 ARRAY[], u32 SIZE )
+{
+    //srand( time( NULL ) );
+ 
+    for( u32 i = SIZE - 1; i > 0; i -- )
+    {
+        u32 r = rand() % ( i + 1 ); 
+        int temp = ARRAY[i];
+        ARRAY[i] = ARRAY[r];
+        ARRAY[r] = temp;
     }
 }

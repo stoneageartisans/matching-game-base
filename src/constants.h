@@ -38,8 +38,8 @@
 #define BIT_DEPTH      24
 #define ANTI_ALIASING  0
 
-// Hidden Objects - Image Files
-const static char* OBJECT_IMAGE[] =
+// Hidden Object Image Files
+const static char* OBJECT_IMAGES[] =
 {
     "cat.png",
     "dog.png",

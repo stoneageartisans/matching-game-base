@@ -56,6 +56,7 @@ class Application : public IEventReceiver
         void initialize_values();
         void initialize_widgets();
         void run();
+        void shuffle( u32 ARRAY[], u32 SIZE );
 };
 
 #endif /* APPLICATION_H */
