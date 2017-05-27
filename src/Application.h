@@ -32,12 +32,14 @@ class Application : public IEventReceiver
         ITexture*         textures_hidden[OBJECT_TOTAL];
         IrrlichtDevice*   irrlicht_device;
         ILightSceneNode*  light;
+        u32               matches;
         ANativeWindow*    native_window;
         IMeshSceneNode*   node_display_plane;
         ISceneManager*    scene_manager;        
         s32               screen_height;
         s32               screen_width;
         u32               selection_state;
+        u32               selections[2];
         ITexture*         texture_background;
         ITexture*         texture_tile;
         array<Tile*>      tiles;
@@ -45,6 +47,7 @@ class Application : public IEventReceiver
         IVideoDriver*     video_driver;
         f32               z_offset;
         
+        void check_for_match();
         void exit();
         void initialize( android_app* ANDROID_APP );
         void initialize_assets();
@@ -55,6 +58,7 @@ class Application : public IEventReceiver
         void initialize_tiles();
         void initialize_values();
         void initialize_widgets();
+        void reset_game();
         void run();
         void shuffle( u32 ARRAY[], u32 SIZE );
 };

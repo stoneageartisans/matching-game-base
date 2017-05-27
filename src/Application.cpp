@@ -36,10 +36,18 @@ bool Application::OnEvent( const SEvent& EVENT )
                         if( ( button_id > NO_ID ) && ( button_id < TOTAL_TILES ) )
                         {
                             Tile* tile = tiles[button_id];
+                            tile->set_state( DISABLED );
                             tile->reveal_object( textures_hidden[tile->get_hidden_object()] );
-                            //selection_state ++;
+                            selections[selection_state] = button_id;
+                            selection_state ++;
+                            was_handled = true;
+                            if( selection_state == TWO_TILES )
+                            {
+                                check_for_match();
+                            }
                         }
                     }
+                    break;                    
             }
             break;
         case EET_TOUCH_INPUT_EVENT:
@@ -81,6 +89,34 @@ bool Application::OnEvent( const SEvent& EVENT )
 /*
  * Private Methods
  */
+
+void Application::check_for_match()
+{
+    Tile* selected_tile_1 = tiles[selections[FIRST]];
+    Tile* selected_tile_2 = tiles[selections[SECOND]];
+    
+    
+    if( selected_tile_1->get_hidden_object() == selected_tile_2->get_hidden_object() )
+    {
+        matches ++;
+        if( matches == OBJECT_TOTAL )
+        {
+            reset_game();
+        }
+    }
+    else
+    {
+        selected_tile_1->get_node()->setMaterialTexture( 0, texture_tile );
+        selected_tile_2->get_node()->setMaterialTexture( 0, texture_tile );
+        
+        selected_tile_1->set_state( ENABLED );
+        selected_tile_2->set_state( ENABLED );
+    }
+    
+    selections[FIRST] = NO_ID;
+    selections[SECOND] = NO_ID;
+    selection_state = NO_TILES;
+}
 
 void Application::exit()
 {
@@ -256,7 +292,10 @@ void Application::initialize_values()
     color_background = new COLOR_BLACK;
     color_white = new COLOR_WHITE;
     touch_held_down = false;
+    matches = 0;
     selection_state = NO_TILES;
+    selections[FIRST] = NO_ID;
+    selections[SECOND] = NO_ID;
 }
 
 void Application::initialize_widgets()
@@ -295,6 +334,20 @@ void Application::initialize_widgets()
                                                           L"" ) );
         tiles[i]->get_button()->setDrawBorder( false );
     }    
+}
+
+void Application::reset_game()
+{
+    matches = 0;
+    selection_state = NO_TILES;
+    selections[FIRST] = NO_ID;
+    selections[SECOND] = NO_ID;
+    
+    for( u32 i = 0; i < TOTAL_TILES; i ++ )
+    {
+        tiles[i]->get_node()->setMaterialTexture( 0, texture_tile );
+        tiles[i]->set_state( ENABLED );
+    }
 }
 
 void Application::run()

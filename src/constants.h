@@ -24,7 +24,7 @@
 
 // Files - Assets - Images
 #define IMAGE_BACKGROUND "background.png"
-#define IMAGE_TILE       "tile.png"
+#define IMAGE_TILE       "barn.png"
 
 // Files - Assets - Meshes
 #define TILE_PLANE    "plane_256x256.3ds"
@@ -58,6 +58,10 @@ const static char* OBJECT_IMAGES[] =
 #define ONE_TILE  1
 #define TWO_TILES 2
 #define LOCKED    3
+
+// Selections
+#define FIRST  0
+#define SECOND 1
 
 // Strings
 #define TEXT_EXIT L"Exit"
