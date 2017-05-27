@@ -29,7 +29,7 @@ class Application : public IEventReceiver
         dimension2d<u32>* dimension_screen;
         IGUIFont*         font_main;
         IGUIEnvironment*  gui_environment;
-        ITexture*         textures_hidden[( u32 ) TOTAL_OBJECTS];
+        ITexture*         textures_hidden[OBJECT_TOTAL];
         IrrlichtDevice*   irrlicht_device;
         ILightSceneNode*  light;
         ANativeWindow*    native_window;
@@ -37,7 +37,7 @@ class Application : public IEventReceiver
         ISceneManager*    scene_manager;        
         s32               screen_height;
         s32               screen_width;
-        SelectionState    selection_state;
+        u32               selection_state;
         ITexture*         texture_background;
         ITexture*         texture_tile;
         array<Tile*>      tiles;

@@ -38,18 +38,7 @@
 #define BIT_DEPTH      24
 #define ANTI_ALIASING  0
 
-// Hidden Object - Enumeration
-enum HiddenObject
-{
-    CAT,
-    DOG,
-    DUCK,
-    HORSE,
-    PIG,
-    TOTAL_OBJECTS
-};
-
-// Hidden Object - Image Files
+// Hidden Objects - Image Files
 const static char* OBJECT_IMAGE[] =
 {
     "cat.png",
@@ -59,17 +48,16 @@ const static char* OBJECT_IMAGE[] =
     "pig.png"
 };
 
-// Misc Settings
+// Misc Settings & Values
 #define LIGHT_RADIUS 3000
+#define NO_ID          -1
+#define OBJECT_TOTAL    5
 
-// Selection State - Enumeration
-enum SelectionState
-{
-    NONE,
-    ONE_TILE,
-    TWO_TILES,
-    LOCKED
-};
+// Selection States
+#define NO_TILES  0
+#define ONE_TILE  1
+#define TWO_TILES 2
+#define LOCKED    3
 
 // Strings
 #define TEXT_EXIT L"Exit"
@@ -82,16 +70,28 @@ enum TileState
 };
 
 // Tile Values
-#define TILE_COLUMNS      5
-#define TILE_ROWS         2
-#define TILE_X_OFFSET   320.0
-#define TILE_X_START   -640.0
-#define TILE_Y_OFFSET   400.0
-#define TILE_Y_START    280.0
-#define TOTAL_TILES      10
+#define TILE_BUTTON_HEIGHT  80
+#define TILE_BUTTON_WIDTH   80
+#define TILE_COLUMNS         5
+#define TILE_ROWS            2
+#define TILE_X_OFFSET      320.0
+#define TILE_X_START      -640.0
+#define TILE_Y_OFFSET      400.0
+#define TILE_Y_START       280.0
+#define TOTAL_TILES         10
 
 // Widgets - Buttons
-#define BUTTON_EXIT 99
+#define BUTTON_TILE_0  0
+#define BUTTON_TILE_1  1
+#define BUTTON_TILE_2  2
+#define BUTTON_TILE_3  3
+#define BUTTON_TILE_4  4
+#define BUTTON_TILE_5  5
+#define BUTTON_TILE_6  6
+#define BUTTON_TILE_7  7
+#define BUTTON_TILE_8  8
+#define BUTTON_TILE_9  9
+#define BUTTON_EXIT    99
 
 // XY Values
 #define EXIT_BUTTON_XY  800.0, -440.0

@@ -25,14 +25,21 @@ bool Application::OnEvent( const SEvent& EVENT )
             switch( EVENT.GUIEvent.EventType )
             {
                 case EGET_BUTTON_CLICKED:
-                    switch( EVENT.GUIEvent.Caller->getID() )
+                    s32 button_id = EVENT.GUIEvent.Caller->getID();
+                    if( button_id == BUTTON_EXIT )
                     {
-                        case BUTTON_EXIT:
-                            exit();
-                            was_handled = true;
-                            break;
+                        exit();
+                        was_handled = true;
                     }
-                    break;
+                    if( selection_state < TWO_TILES )
+                    {
+                        if( ( button_id > NO_ID ) && ( button_id < TOTAL_TILES ) )
+                        {
+                            Tile* tile = tiles[button_id];
+                            tile->reveal_object( textures_hidden[tile->get_hidden_object()] );
+                            selection_state ++;
+                        }
+                    }
             }
             break;
         case EET_TOUCH_INPUT_EVENT:
@@ -108,11 +115,10 @@ void Application::initialize_assets()
     texture_background = video_driver->getTexture( IMAGE_BACKGROUND );
     texture_tile = video_driver->getTexture( IMAGE_TILE );
     
-    u32 total = ( u32 ) TOTAL_OBJECTS;
+    u32 total = ( u32 ) OBJECT_TOTAL;
     for( u32 i = 0; i < total; i ++ )
     {
         textures_hidden[i] = video_driver->getTexture( OBJECT_IMAGE[i] );
-        irrlicht_device->getLogger()->log( "Heh?" );
     }
 }
 
@@ -215,7 +221,7 @@ void Application::initialize_tiles()
                                                                      i,
                                                                      vector3df( x, y, ( TILE_Z + z_offset ) ),
                                                                      vector3df( 0, 0, 180.0 ) ), // Blender flipped the .3ds z-axis
-                                    ( HiddenObject ) i ), // Replace this with a randomly generated object
+                                    column ), // Replace this with a randomly generated object
                           i ); 
             tiles[i]->get_node()->setMaterialType( EMT_TRANSPARENT_ALPHA_CHANNEL );
             tiles[i]->get_node()->setMaterialFlag( EMF_LIGHTING, true );
@@ -235,7 +241,7 @@ void Application::initialize_values()
     color_background = new COLOR_BLACK;
     color_white = new COLOR_WHITE;
     touch_held_down = false;
-    selection_state = LOCKED;
+    selection_state = NO_TILES;
 }
 
 void Application::initialize_widgets()
@@ -246,6 +252,7 @@ void Application::initialize_widgets()
     u32 button_height;    
     position2d<s32> screen_coordinates;
     
+    // The Exit Button
     button_width = font_main->getDimension( L"Exit" ).Width * 2;
     button_height = font_main->getDimension( L"Exit" ).Height * 2;
     screen_coordinates = collision_manager->getScreenCoordinatesFrom3DPosition( vector3df( EXIT_BUTTON_XY, TILE_Z + z_offset ) );
@@ -257,6 +264,22 @@ void Application::initialize_widgets()
                                               BUTTON_EXIT,
                                               TEXT_EXIT );
     button_exit->setDrawBorder( false );
+    
+    // The Tile Buttons
+    button_width = TILE_BUTTON_WIDTH;
+    button_height = TILE_BUTTON_HEIGHT;
+    for( u32 i = 0; i < TOTAL_TILES; i ++ )
+    {
+        screen_coordinates = collision_manager->getScreenCoordinatesFrom3DPosition( tiles[i]->get_node()->getPosition() );
+        screen_coordinates.X = screen_coordinates.X - ( button_width / 2 );
+        screen_coordinates.Y = screen_coordinates.Y - ( button_height / 2 );
+        tiles[i]->set_button( gui_environment->addButton( rect<s32>( screen_coordinates,
+                                                                     dimension2d<u32>( button_width, button_height ) ),
+                                                          0,
+                                                          i,
+                                                          L"" ) );
+        tiles[i]->get_button()->setDrawBorder( false );
+    }    
 }
 
 void Application::run()
