@@ -39,15 +39,21 @@ class Application : public IEventReceiver
         s32               screen_height;
         s32               screen_width;
         u32               selection_state;
-        u32               selections[2];
+        u32               selection[2];
         ITexture*         texture_background;
         ITexture*         texture_tile;
+        ITimer*           timer;
         array<Tile*>      tiles;
+        u32               timer_delay;
+        bool              timer_running;
+        u32               timer_start;
         bool              touch_held_down;
         IVideoDriver*     video_driver;
         f32               z_offset;
         
         void check_for_match();
+        void check_timer();
+        void continue_round();
         void exit();
         void initialize( android_app* ANDROID_APP );
         void initialize_assets();
@@ -61,6 +67,8 @@ class Application : public IEventReceiver
         void reset_game();
         void run();
         void shuffle( u32 ARRAY[], u32 SIZE );
+        void start_timer( u32 DURATION );
+        void stop_timer();
 };
 
 #endif /* APPLICATION_H */

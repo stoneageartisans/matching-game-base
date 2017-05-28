@@ -49,9 +49,11 @@ const static char* OBJECT_IMAGES[] =
 };
 
 // Misc Settings & Values
-#define LIGHT_RADIUS 3000
-#define NO_ID          -1
-#define OBJECT_TOTAL    5
+#define LIGHT_RADIUS   3000
+#define COMPARE_DELAY  2000
+#define NO_ID            -1
+#define OBJECT_TOTAL      5
+#define WIN_DELAY      3000
 
 // Selection States
 #define NO_TILES  0

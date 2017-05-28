@@ -35,10 +35,9 @@ bool Application::OnEvent( const SEvent& EVENT )
                     {
                         if( ( button_id > NO_ID ) && ( button_id < TOTAL_TILES ) )
                         {
-                            Tile* tile = tiles[button_id];
-                            tile->set_state( DISABLED );
-                            tile->reveal_object( textures_hidden[tile->get_hidden_object()] );
-                            selections[selection_state] = button_id;
+                            tiles[button_id]->set_state( DISABLED );
+                            tiles[button_id]->reveal_object( textures_hidden[tiles[button_id]->get_hidden_object()] );
+                            selection[selection_state] = button_id;
                             selection_state ++;
                             was_handled = true;
                             if( selection_state == TWO_TILES )
@@ -92,30 +91,50 @@ bool Application::OnEvent( const SEvent& EVENT )
 
 void Application::check_for_match()
 {
-    Tile* selected_tile_1 = tiles[selections[FIRST]];
-    Tile* selected_tile_2 = tiles[selections[SECOND]];
     
-    
-    if( selected_tile_1->get_hidden_object() == selected_tile_2->get_hidden_object() )
+    if( tiles[selection[FIRST]]->get_hidden_object() == tiles[selection[SECOND]]->get_hidden_object() )
     {
         matches ++;
         if( matches == OBJECT_TOTAL )
         {
-            reset_game();
+            start_timer( WIN_DELAY );
+        }
+        else
+        {
+            selection[FIRST] = NO_ID;
+            selection[SECOND] = NO_ID;
+            selection_state = NO_TILES;
         }
     }
     else
     {
-        selected_tile_1->get_node()->setMaterialTexture( 0, texture_tile );
-        selected_tile_2->get_node()->setMaterialTexture( 0, texture_tile );
-        
-        selected_tile_1->set_state( ENABLED );
-        selected_tile_2->set_state( ENABLED );
+        start_timer( COMPARE_DELAY );
     }
+}
+
+void Application::check_timer()
+{
+    if( timer_running )
+    {
+        if( ( timer->getRealTime() - timer_start ) > timer_delay )
+        {
+            stop_timer();
+        }
+    }
+}
+
+void Application::continue_round()
+{
+    tiles[selection[FIRST]]->get_node()->setMaterialTexture( 0, texture_tile );
+    tiles[selection[SECOND]]->get_node()->setMaterialTexture( 0, texture_tile );
+
+    tiles[selection[FIRST]]->set_state( ENABLED );
+    tiles[selection[SECOND]]->set_state( ENABLED );
     
-    selections[FIRST] = NO_ID;
-    selections[SECOND] = NO_ID;
     selection_state = NO_TILES;
+    
+    selection[FIRST] = NO_ID;
+    selection[SECOND] = NO_ID;
 }
 
 void Application::exit()
@@ -237,6 +256,8 @@ void Application::initialize_irrlicht( SIrrlichtCreationParameters* PARAMETERS )
     
     screen_width = video_driver->getScreenSize().Width;
     screen_height = video_driver->getScreenSize().Height;
+    
+    timer = irrlicht_device->getTimer();
 }
 
 void Application::initialize_tiles()
@@ -294,8 +315,11 @@ void Application::initialize_values()
     touch_held_down = false;
     matches = 0;
     selection_state = NO_TILES;
-    selections[FIRST] = NO_ID;
-    selections[SECOND] = NO_ID;
+    selection[FIRST] = NO_ID;
+    selection[SECOND] = NO_ID;
+    timer_delay = 0;
+    timer_running = false;    
+    timer_start = 0;
 }
 
 void Application::initialize_widgets()
@@ -337,11 +361,11 @@ void Application::initialize_widgets()
 }
 
 void Application::reset_game()
-{
+{            
     matches = 0;
     selection_state = NO_TILES;
-    selections[FIRST] = NO_ID;
-    selections[SECOND] = NO_ID;
+    selection[FIRST] = NO_ID;
+    selection[SECOND] = NO_ID;
     
     for( u32 i = 0; i < TOTAL_TILES; i ++ )
     {
@@ -357,7 +381,12 @@ void Application::run()
         video_driver->beginScene( true, true, *color_background );
         scene_manager->drawAll();
         gui_environment->drawAll();
-        video_driver->endScene();
+        video_driver->endScene();        
+        if( timer_running )
+        {
+            check_timer();
+        }
+        irrlicht_device->yield();
     }
 }
 
@@ -372,4 +401,28 @@ void Application::shuffle( u32 ARRAY[], u32 SIZE )
         ARRAY[i] = ARRAY[r];
         ARRAY[r] = temp;
     }
+}
+
+void Application::start_timer( u32 DURATION )
+{
+    selection_state = LOCKED;
+    timer_delay = DURATION;
+    timer_start = timer->getRealTime();
+    timer_running = true;
+}
+
+void Application::stop_timer()
+{
+    if( matches == OBJECT_TOTAL )
+    {
+        reset_game();
+    }
+    else
+    {
+        continue_round();
+    }
+    
+    timer_running = false;
+    timer_delay = 0;
+    timer_start = 0;
 }
