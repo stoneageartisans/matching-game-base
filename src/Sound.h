@@ -18,7 +18,9 @@ class Sound
         void update();
         
     private:
+        CkBank*  bank_banjo;
         CkBank*  bank_barn;
+        CkSound* sound_banjo;
         CkSound* sound_barn;
         
         void dispose();

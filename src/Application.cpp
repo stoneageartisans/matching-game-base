@@ -107,6 +107,7 @@ void Application::check_for_match()
     else
     {
         start_timer( COMPARE_DELAY );
+        sound->play( NO_MATCH );
     }
 }
 

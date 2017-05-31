@@ -31,8 +31,8 @@
 #define DISPLAY_PLANE "plane_1920x1200.3ds"
 
 // Files - Assets - Sounds
-#define SOUND_BARN "barn.ckb"
-
+#define SOUND_BANJO "banjo.ckb"
+#define SOUND_BARN  "barn.ckb"
 
 // Graphics Properties
 #define DRIVER_TYPE    EDT_OGLES1
@@ -72,8 +72,8 @@ const static char* OBJECT_IMAGES[] =
 // Sound Effects - Enumeration
 enum SoundEffect
 {
-    NO_SOUND,
-    SELECT_TILE
+    SELECT_TILE,
+    NO_MATCH
 };
 
 // Tile State - Enumeration
