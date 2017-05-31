@@ -12,8 +12,9 @@ Application::Application( android_app* ANDROID_APP )
 
 Application::~Application()
 {
-    irrlicht_device->drop();
     delete sound;
+    
+    irrlicht_device->drop();
 }
 
 bool Application::OnEvent( const SEvent& EVENT )
@@ -27,15 +28,11 @@ bool Application::OnEvent( const SEvent& EVENT )
             {
                 case EGET_BUTTON_CLICKED:
                     s32 button_id = EVENT.GUIEvent.Caller->getID();
-                    if( button_id == BUTTON_EXIT )
-                    {
-                        exit();
-                        was_handled = true;
-                    }
                     if( selection_state < TWO_TILES )
                     {
                         if( ( button_id > NO_ID ) && ( button_id < TOTAL_TILES ) )
                         {
+                            sound->play( SELECT_TILE );
                             tiles[button_id]->set_state( DISABLED );
                             tiles[button_id]->reveal_object( textures_hidden[tiles[button_id]->get_hidden_object()] );
                             selection[selection_state] = button_id;
@@ -147,20 +144,14 @@ void Application::exit()
 
 void Application::initialize( android_app* ANDROID_APP )
 {
-	SIrrlichtCreationParameters* parameters = new SIrrlichtCreationParameters();
-	parameters->DriverType = DRIVER_TYPE;
-	parameters->Bits = BIT_DEPTH;
-	parameters->AntiAlias = ANTI_ALIASING;
-    parameters->WindowSize = SCREEN_SIZE;
-    parameters->PrivateData = ANDROID_APP;
-    
-    initialize_irrlicht( parameters );
+    initialize_irrlicht( ANDROID_APP );
     initialize_camera();
     initialize_values();
     initialize_assets();
     initialize_fonts();
     initialize_display();
     initialize_tiles();
+    initialize_sound( ANDROID_APP );
     initialize_widgets();
 }
 
@@ -246,9 +237,17 @@ void Application::initialize_fonts()
     skin->setColor( EGDC_BUTTON_TEXT, *color_white );
 }
 
-void Application::initialize_irrlicht( SIrrlichtCreationParameters* PARAMETERS )
+void Application::initialize_irrlicht( android_app* ANDROID_APP )
 {
-    irrlicht_device = createDeviceEx( *PARAMETERS );
+    SIrrlichtCreationParameters* parameters = new SIrrlichtCreationParameters();
+    
+	parameters->DriverType = DRIVER_TYPE;
+	parameters->Bits = BIT_DEPTH;
+	parameters->AntiAlias = ANTI_ALIASING;
+    parameters->WindowSize = SCREEN_SIZE;
+    parameters->PrivateData = ANDROID_APP;
+    
+    irrlicht_device = createDeviceEx( *parameters );
     irrlicht_device->setEventReceiver( this );
     
     video_driver = irrlicht_device->getVideoDriver();
@@ -261,9 +260,9 @@ void Application::initialize_irrlicht( SIrrlichtCreationParameters* PARAMETERS )
     timer = irrlicht_device->getTimer();
 }
 
-void Application::initialize_sound()
+void Application::initialize_sound( android_app* ANDROID_APP )
 {
-    sound = new Sound();
+    sound = new Sound( ANDROID_APP );
 }
 
 void Application::initialize_tiles()
@@ -336,19 +335,6 @@ void Application::initialize_widgets()
     u32 button_height;    
     position2d<s32> screen_coordinates;
     
-    // The Exit Button
-    button_width = font_main->getDimension( L"Exit" ).Width * 2;
-    button_height = font_main->getDimension( L"Exit" ).Height * 2;
-    screen_coordinates = collision_manager->getScreenCoordinatesFrom3DPosition( vector3df( EXIT_BUTTON_XY, TILE_Z + z_offset ) );
-    screen_coordinates.X = screen_coordinates.X - ( button_width / 2 );
-    screen_coordinates.Y = screen_coordinates.Y - ( button_height / 2 );
-    button_exit = gui_environment->addButton( rect<s32>( screen_coordinates,
-                                                         dimension2d<u32>( button_width, button_height ) ),
-                                              0,
-                                              BUTTON_EXIT,
-                                              TEXT_EXIT );
-    button_exit->setDrawBorder( false );
-    
     // The Tile Buttons
     button_width = TILE_BUTTON_WIDTH;
     button_height = TILE_BUTTON_HEIGHT;
@@ -407,7 +393,10 @@ void Application::run()
             check_timer();
         }
         irrlicht_device->yield();
+        sound->update();
     }
+    
+    exit();
 }
 
 void Application::shuffle( u32 ARRAY[], u32 SIZE )

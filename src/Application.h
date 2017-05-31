@@ -23,7 +23,6 @@ class Application : public IEventReceiver
         bool OnEvent( const SEvent& EVENT );
         
     private:
-        IGUIButton*       button_exit;
         ICameraSceneNode* camera;
         SColor*           color_background;
         SColor*           color_white;
@@ -62,8 +61,8 @@ class Application : public IEventReceiver
         void initialize_camera();
         void initialize_display();
         void initialize_fonts();
-        void initialize_irrlicht( SIrrlichtCreationParameters* PARAMETERS );
-        void initialize_sound();
+        void initialize_irrlicht( android_app* ANDROID_APP );
+        void initialize_sound( android_app* ANDROID_APP );
         void initialize_tiles();
         void initialize_values();
         void initialize_widgets();

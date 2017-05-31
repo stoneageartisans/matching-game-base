@@ -30,6 +30,10 @@
 #define TILE_PLANE    "plane_256x256.3ds"
 #define DISPLAY_PLANE "plane_1920x1200.3ds"
 
+// Files - Assets - Sounds
+#define SOUND_BARN "barn.ckb"
+
+
 // Graphics Properties
 #define DRIVER_TYPE    EDT_OGLES1
 #define SCREEN_WIDTH   0
@@ -65,8 +69,12 @@ const static char* OBJECT_IMAGES[] =
 #define FIRST  0
 #define SECOND 1
 
-// Strings
-#define TEXT_EXIT L"Exit"
+// Sound Effects - Enumeration
+enum SoundEffect
+{
+    NO_SOUND,
+    SELECT_TILE
+};
 
 // Tile State - Enumeration
 enum TileState
@@ -97,7 +105,6 @@ enum TileState
 #define BUTTON_TILE_7  7
 #define BUTTON_TILE_8  8
 #define BUTTON_TILE_9  9
-#define BUTTON_EXIT    99
 
 // XY Values
 #define EXIT_BUTTON_XY  800.0, -440.0
