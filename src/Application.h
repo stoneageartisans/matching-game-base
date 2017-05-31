@@ -5,6 +5,7 @@
 #include <irrlicht.h>
 
 #include "constants.h"
+#include "Sound.h"
 #include "Tile.h"
 
 using namespace irr;
@@ -40,6 +41,7 @@ class Application : public IEventReceiver
         s32               screen_width;
         u32               selection_state;
         u32               selection[2];
+        Sound*            sound;
         ITexture*         texture_background;
         ITexture*         texture_tile;
         ITimer*           timer;
@@ -61,6 +63,7 @@ class Application : public IEventReceiver
         void initialize_display();
         void initialize_fonts();
         void initialize_irrlicht( SIrrlichtCreationParameters* PARAMETERS );
+        void initialize_sound();
         void initialize_tiles();
         void initialize_values();
         void initialize_widgets();

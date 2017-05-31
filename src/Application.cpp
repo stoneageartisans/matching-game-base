@@ -13,6 +13,7 @@ Application::Application( android_app* ANDROID_APP )
 Application::~Application()
 {
     irrlicht_device->drop();
+    delete sound;
 }
 
 bool Application::OnEvent( const SEvent& EVENT )
@@ -260,6 +261,11 @@ void Application::initialize_irrlicht( SIrrlichtCreationParameters* PARAMETERS )
     timer = irrlicht_device->getTimer();
 }
 
+void Application::initialize_sound()
+{
+    sound = new Sound();
+}
+
 void Application::initialize_tiles()
 {
     u32 hidden_objects[TOTAL_TILES];
@@ -371,6 +377,20 @@ void Application::reset_game()
     {
         tiles[i]->get_node()->setMaterialTexture( 0, texture_tile );
         tiles[i]->set_state( ENABLED );
+    }
+    
+    u32 hidden_objects[TOTAL_TILES];
+    
+    for( u32 i = 0; i < TOTAL_TILES; i ++ )
+    {
+        hidden_objects[i] = tiles[i]->get_hidden_object();
+    }
+    
+    shuffle( hidden_objects, TOTAL_TILES );
+    
+    for( u32 i = 0; i < TOTAL_TILES; i ++ )
+    {
+        tiles[i]->set_hidden_object( hidden_objects[i] );
     }
 }
 
