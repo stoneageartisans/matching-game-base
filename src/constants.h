@@ -31,8 +31,8 @@
 #define DISPLAY_PLANE "plane_1920x1200.3ds"
 
 // Files - Assets - Sounds
-#define SOUND_BANJO "banjo.ckb"
-#define SOUND_BARN  "barn.ckb"
+#define SOUND_NO_MATCH    "banjo.ckb"
+#define SOUND_SELECT_TILE "barn.ckb"
 
 // Graphics Properties
 #define DRIVER_TYPE    EDT_OGLES1
@@ -50,6 +50,26 @@ const static char* OBJECT_IMAGES[] =
     "duck.png",
     "horse.png",
     "pig.png"
+};
+
+// Hidden Object Sound Names
+const static char* OBJECT_NAMES[] =
+{
+    "cat",
+    "dog",
+    "duck",
+    "horse",
+    "pig"
+};
+
+// Hidden Object Sound Files
+const static char* OBJECT_SOUNDS[] =
+{
+    "cat.ckb",
+    "dog.ckb",
+    "duck.ckb",
+    "horse.ckb",
+    "pig.ckb"
 };
 
 // Misc Settings & Values
@@ -73,7 +93,8 @@ const static char* OBJECT_IMAGES[] =
 enum SoundEffect
 {
     SELECT_TILE,
-    NO_MATCH
+    NO_MATCH,
+    GOT_MATCH
 };
 
 // Tile State - Enumeration

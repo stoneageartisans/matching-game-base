@@ -88,14 +88,14 @@ bool Application::OnEvent( const SEvent& EVENT )
  */
 
 void Application::check_for_match()
-{
-    
+{    
     if( tiles[selection[FIRST]]->get_hidden_object() == tiles[selection[SECOND]]->get_hidden_object() )
     {
+        sound->play( GOT_MATCH, ( int ) tiles[selection[FIRST]]->get_hidden_object() );
         matches ++;
         if( matches == OBJECT_TOTAL )
         {
-            start_timer( WIN_DELAY );
+            start_timer( WIN_DELAY );            
         }
         else
         {
