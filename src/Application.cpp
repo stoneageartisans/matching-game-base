@@ -149,7 +149,6 @@ void Application::initialize( android_app* ANDROID_APP )
     initialize_camera();
     initialize_values();
     initialize_assets();
-    initialize_fonts();
     initialize_display();
     initialize_tiles();
     initialize_sound( ANDROID_APP );
@@ -215,29 +214,6 @@ void Application::initialize_display()
     node_display_plane->setMaterialTexture( 0, texture_background );
 }
 
-void Application::initialize_fonts()
-{
-    s32 screen_diagonal = squareroot( ( screen_width * screen_width ) + ( screen_height * screen_height ) );
-    
-    if( screen_diagonal < 1200 )
-    {
-        font_main = gui_environment->getFont( FONT_24 );
-    }
-    else if( screen_diagonal > 1800 )
-    {
-        font_main = gui_environment->getFont( FONT_36 );
-    }
-    else
-    {
-        font_main = gui_environment->getFont( FONT_48 );
-    }
-    
-    IGUISkin* skin = gui_environment->getSkin();
-    
-    skin->setFont( font_main );
-    skin->setColor( EGDC_BUTTON_TEXT, *color_white );
-}
-
 void Application::initialize_irrlicht( android_app* ANDROID_APP )
 {
     SIrrlichtCreationParameters* parameters = new SIrrlichtCreationParameters();
@@ -299,6 +275,7 @@ void Application::initialize_tiles()
                                                                      i,
                                                                      vector3df( x, y, ( TILE_Z + z_offset ) ),
                                                                      vector3df( 0, 0, 180.0 ) ), // Blender flipped the .3ds z-axis
+                                    scene_manager->addParticleSystemSceneNode( false ),
                                     hidden_objects[i] ),
                           i ); 
             tiles[i]->get_node()->setMaterialType( EMT_TRANSPARENT_ALPHA_CHANNEL );

@@ -27,7 +27,6 @@ class Application : public IEventReceiver
         SColor*           color_background;
         SColor*           color_white;
         dimension2d<u32>* dimension_screen;
-        IGUIFont*         font_main;
         IGUIEnvironment*  gui_environment;
         ITexture*         textures_hidden[OBJECT_TOTAL];
         IrrlichtDevice*   irrlicht_device;
@@ -60,7 +59,6 @@ class Application : public IEventReceiver
         void initialize_assets();
         void initialize_camera();
         void initialize_display();
-        void initialize_fonts();
         void initialize_irrlicht( android_app* ANDROID_APP );
         void initialize_sound( android_app* ANDROID_APP );
         void initialize_tiles();

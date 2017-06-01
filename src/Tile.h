@@ -15,7 +15,10 @@ using namespace gui;
 class Tile
 {
     public:
-        Tile( u32 ID, IMeshSceneNode* NODE, u32 HIDDEN_OBJECT );
+        Tile( u32 ID,
+              IMeshSceneNode* NODE,
+              IParticleSystemSceneNode* PARTICLE_NODE,
+              u32 HIDDEN_OBJECT );
         virtual ~Tile();
         u32 get_id();
         IGUIButton* get_button();
@@ -29,13 +32,17 @@ class Tile
         void set_state( TileState TILE_STATE );
         
     private:
-        IGUIButton*     button;
-        u32             hidden_object;
-        u32             id;
-        IMeshSceneNode* node;
-        TileState       state;
+        IGUIButton*               button;
+        u32                       hidden_object;
+        u32                       id;
+        IMeshSceneNode*           node;
+        IParticleSystemSceneNode* particle_node;
+        TileState                 state;
         
-        void initialize( u32 ID, IMeshSceneNode* NODE, u32 HIDDEN_OBJECT );
+        void initialize( u32 ID,
+                         IMeshSceneNode* NODE,
+                         IParticleSystemSceneNode* PARTICLE_NODE,
+                         u32 HIDDEN_OBJECT );
 };
 
 #endif /* TILE_H */
