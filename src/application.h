@@ -5,8 +5,8 @@
 #include <irrlicht.h>
 
 #include "constants.h"
-#include "Sound.h"
-#include "Tile.h"
+#include "sound.h"
+#include "tile.h"
 
 using namespace irr;
 using namespace core;
@@ -20,7 +20,8 @@ class Application : public IEventReceiver
     public:
         Application( android_app* ANDROID_APP );
         ~Application();
-        bool OnEvent( const SEvent& EVENT );
+        bool OnEvent( const SEvent& EVENT ) override;
+        void run();
         
     private:
         ICameraSceneNode* camera;
@@ -33,7 +34,7 @@ class Application : public IEventReceiver
         ILightSceneNode*  light;
         u32               matches;
         ANativeWindow*    native_window;
-        IMeshSceneNode*   node_display_plane;
+        IMeshSceneNode*   node_background;
         ISceneManager*    scene_manager;        
         s32               screen_height;
         s32               screen_width;
@@ -65,7 +66,6 @@ class Application : public IEventReceiver
         void initialize_values();
         void initialize_widgets();
         void reset_game();
-        void run();
         void shuffle( u32 ARRAY[], u32 SIZE );
         void start_timer( u32 DURATION );
         void stop_timer();

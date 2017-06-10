@@ -1,4 +1,4 @@
-#include "Application.h"
+#include "application.h"
 
 /*
  * Public Methods
@@ -7,7 +7,6 @@
 Application::Application( android_app* ANDROID_APP )
 {
     initialize( ANDROID_APP );
-    run();
 }
 
 Application::~Application()
@@ -81,6 +80,25 @@ bool Application::OnEvent( const SEvent& EVENT )
     }
     
     return was_handled;
+}
+
+void Application::run()
+{    
+    while( irrlicht_device->run() )
+    {
+        video_driver->beginScene( true, true, *color_background );
+        scene_manager->drawAll();
+        gui_environment->drawAll();
+        video_driver->endScene();        
+        if( timer_running )
+        {
+            check_timer();
+        }
+        irrlicht_device->yield();
+        sound->update();
+    }
+    
+    exit();
 }
 
 /*
@@ -208,10 +226,10 @@ void Application::initialize_display()
         z_offset = Z_OFFSET_1_777;
     }
     
-    node_display_plane = scene_manager->addMeshSceneNode( scene_manager->getMesh( DISPLAY_PLANE ) );
-    node_display_plane->setMaterialFlag( EMF_LIGHTING, true );
-    node_display_plane->setPosition( vector3df( 0, 0, ( DISPLAY_PLANE_Z + z_offset ) ) );
-    node_display_plane->setMaterialTexture( 0, texture_background );
+    node_background = scene_manager->addMeshSceneNode( scene_manager->getMesh( MESH_BACKGROUND ) );
+    node_background->setMaterialFlag( EMF_LIGHTING, true );
+    node_background->setPosition( vector3df( 0, 0, ( DISPLAY_PLANE_Z + z_offset ) ) );
+    node_background->setMaterialTexture( 0, texture_background );
 }
 
 void Application::initialize_irrlicht( android_app* ANDROID_APP )
@@ -258,7 +276,7 @@ void Application::initialize_tiles()
     
     shuffle( hidden_objects, TOTAL_TILES );
     
-    IAnimatedMesh* mesh = scene_manager->getMesh( TILE_PLANE );
+    IAnimatedMesh* mesh = scene_manager->getMesh( MESH_TILE );
     
     u32 i = 0;
     f32 y = TILE_Y_START;
@@ -356,25 +374,6 @@ void Application::reset_game()
     {
         tiles[i]->set_hidden_object( hidden_objects[i] );
     }
-}
-
-void Application::run()
-{    
-    while( irrlicht_device->run() )
-    {
-        video_driver->beginScene( true, true, *color_background );
-        scene_manager->drawAll();
-        gui_environment->drawAll();
-        video_driver->endScene();        
-        if( timer_running )
-        {
-            check_timer();
-        }
-        irrlicht_device->yield();
-        sound->update();
-    }
-    
-    exit();
 }
 
 void Application::shuffle( u32 ARRAY[], u32 SIZE )

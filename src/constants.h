@@ -17,18 +17,13 @@
 #define COLOR_BROWN       SColor( 255, 127,  63,   0 )
 #define COLOR_DEVGRAY     SColor( 255,  55,  57,  54 )
 
-// Files - Assets - Fonts
-#define FONT_24 "font_comic_24.xml"
-#define FONT_36 "font_comic_36.xml"
-#define FONT_48 "font_comic_48.xml"
-
 // Files - Assets - Images
 #define IMAGE_BACKGROUND "background.png"
 #define IMAGE_TILE       "barn.png"
 
 // Files - Assets - Meshes
-#define TILE_PLANE    "plane_256x256.3ds"
-#define DISPLAY_PLANE "plane_1920x1200.3ds"
+#define MESH_BACKGROUND "plane_1920x1200.3ds"
+#define MESH_TILE       "plane_256x256.3ds"
 
 // Files - Assets - Sounds
 #define SOUND_NO_MATCH    "banjo.ckb"
@@ -114,18 +109,6 @@ enum TileState
 #define TILE_Y_OFFSET      400.0
 #define TILE_Y_START       280.0
 #define TOTAL_TILES         10
-
-// Widgets - Buttons
-#define BUTTON_TILE_0  0
-#define BUTTON_TILE_1  1
-#define BUTTON_TILE_2  2
-#define BUTTON_TILE_3  3
-#define BUTTON_TILE_4  4
-#define BUTTON_TILE_5  5
-#define BUTTON_TILE_6  6
-#define BUTTON_TILE_7  7
-#define BUTTON_TILE_8  8
-#define BUTTON_TILE_9  9
 
 // XY Values
 #define EXIT_BUTTON_XY  800.0, -440.0
