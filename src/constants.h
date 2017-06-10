@@ -114,10 +114,10 @@ enum TileState
 #define EXIT_BUTTON_XY  800.0, -440.0
 
 // Z Values
-#define DISPLAY_PLANE_Z  826.0
+#define BACKGROUND_Z    826.0
 #define MAX_Z           1000.0
-#define TEXT_Z          DISPLAY_PLANE_Z - 2.0
-#define TILE_Z          DISPLAY_PLANE_Z - 1.0
+#define TEXT_Z          BACKGROUND_Z - 2.0
+#define TILE_Z          BACKGROUND_Z - 1.0
 #define Z_OFFSET_1_250   199.0
 #define Z_OFFSET_1_333   165.0
 #define Z_OFFSET_1_600     0.0

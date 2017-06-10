@@ -11,8 +11,6 @@ Application::Application( android_app* ANDROID_APP )
 
 Application::~Application()
 {
-    delete sound;
-    
     irrlicht_device->drop();
 }
 
@@ -86,7 +84,7 @@ void Application::run()
 {    
     while( irrlicht_device->run() )
     {
-        video_driver->beginScene( true, true, *color_background );
+        video_driver->beginScene( true, true, color_background );
         scene_manager->drawAll();
         gui_environment->drawAll();
         video_driver->endScene();        
@@ -228,21 +226,21 @@ void Application::initialize_display()
     
     node_background = scene_manager->addMeshSceneNode( scene_manager->getMesh( MESH_BACKGROUND ) );
     node_background->setMaterialFlag( EMF_LIGHTING, true );
-    node_background->setPosition( vector3df( 0, 0, ( DISPLAY_PLANE_Z + z_offset ) ) );
+    node_background->setPosition( vector3df( 0, 0, ( BACKGROUND_Z + z_offset ) ) );
     node_background->setMaterialTexture( 0, texture_background );
 }
 
 void Application::initialize_irrlicht( android_app* ANDROID_APP )
 {
-    SIrrlichtCreationParameters* parameters = new SIrrlichtCreationParameters();
+    SIrrlichtCreationParameters parameters;
     
-	parameters->DriverType = DRIVER_TYPE;
-	parameters->Bits = BIT_DEPTH;
-	parameters->AntiAlias = ANTI_ALIASING;
-    parameters->WindowSize = SCREEN_SIZE;
-    parameters->PrivateData = ANDROID_APP;
+	parameters.DriverType = DRIVER_TYPE;
+	parameters.Bits = BIT_DEPTH;
+	parameters.AntiAlias = ANTI_ALIASING;
+    parameters.WindowSize = SCREEN_SIZE;
+    parameters.PrivateData = ANDROID_APP;
     
-    irrlicht_device = createDeviceEx( *parameters );
+    irrlicht_device = createDeviceEx( parameters );
     irrlicht_device->setEventReceiver( this );
     
     video_driver = irrlicht_device->getVideoDriver();
@@ -311,8 +309,8 @@ void Application::initialize_tiles()
 
 void Application::initialize_values()
 {
-    color_background = new COLOR_BLACK;
-    color_white = new COLOR_WHITE;
+    color_background = COLOR_BLACK;
+    color_white = COLOR_WHITE;
     touch_held_down = false;
     matches = 0;
     selection_state = NO_TILES;

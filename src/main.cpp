@@ -5,7 +5,5 @@
 
 void android_main( android_app* ANDROID_APP )
 {
-    app_dummy();
-    
-    ( new Application( ANDROID_APP ) )->run();
+    Application( ANDROID_APP ).run();
 }
