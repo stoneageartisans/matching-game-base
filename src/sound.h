@@ -22,17 +22,18 @@ class Sound
     public:
         Sound( android_app* ANDROID_APP );
         virtual ~Sound();
-        void play( SoundEffect SOUND_EFFECT );
-        void play( SoundEffect SOUND_EFFECT, int INDEX ); 
+        void play( SoundEffect SOUND_EFFECT, int INDEX = -1 ); 
         void update();
         
     private:
+        CkBank*  bank_completed;
         CkBank*  bank_no_match;
+        CkBank*  bank_objects[OBJECT_TOTAL];
         CkBank*  bank_select_tile;
+        CkSound* sound_completed;
         CkSound* sound_no_match;
+        CkSound* sound_objects[OBJECT_TOTAL];
         CkSound* sound_select_tile;
-        CkBank*  banks[OBJECT_TOTAL];
-        CkSound* sounds[OBJECT_TOTAL];
         
         void dispose();
         void initialize( android_app* ANDROID_APP );

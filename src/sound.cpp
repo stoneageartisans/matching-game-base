@@ -15,19 +15,6 @@ Sound::~Sound()
     CkShutdown();
 }
 
-void Sound::play( SoundEffect SOUND_EFFECT )
-{
-    switch( SOUND_EFFECT )
-    {
-        case SELECT_TILE:
-            sound_select_tile->play();
-            break;
-        case NO_MATCH:
-            sound_no_match->play();
-            break;
-    }
-}
-
 void Sound::play( SoundEffect SOUND_EFFECT, int INDEX )
 {
     switch( SOUND_EFFECT )
@@ -39,7 +26,10 @@ void Sound::play( SoundEffect SOUND_EFFECT, int INDEX )
             sound_no_match->play();
             break;
         case GOT_MATCH:
-            sounds[INDEX]->play();
+            sound_objects[INDEX]->play();
+            break;
+        case COMPLETED:
+            sound_completed->play();
             break;
     }
 }
@@ -57,7 +47,7 @@ void Sound::dispose()
 {
     for( int i = 0; i < OBJECT_TOTAL; i ++ )
     {
-        sounds[i]->destroy();
+        sound_objects[i]->destroy();
     }
     
     sound_no_match->destroy();
@@ -65,7 +55,7 @@ void Sound::dispose()
     
     for( int i = 0; i < OBJECT_TOTAL; i ++ )
     {
-        banks[i]->destroy();
+        bank_objects[i]->destroy();
     }
     
     bank_no_match->destroy();
@@ -77,6 +67,9 @@ void Sound::initialize( android_app* ANDROID_APP )
     CkConfig config( ANDROID_APP->activity->vm, ANDROID_APP->activity->clazz );
     CkInit( &config );
     
+    bank_completed = CkBank::newBank( SOUND_COMPLETED );
+    sound_completed = CkSound::newBankSound( bank_completed, "fiddle" );
+    
     bank_no_match = CkBank::newBank( SOUND_NO_MATCH );
     sound_no_match = CkSound::newBankSound( bank_no_match, "banjo" );
             
@@ -85,7 +78,7 @@ void Sound::initialize( android_app* ANDROID_APP )
     
     for( int i = 0; i < OBJECT_TOTAL; i ++ )
     {
-        banks[i] = CkBank::newBank( OBJECT_SOUNDS[i] );
-        sounds[i] = CkSound::newBankSound( banks[i], OBJECT_NAMES[i] );
+        bank_objects[i] = CkBank::newBank( OBJECT_SOUNDS[i] );
+        sound_objects[i] = CkSound::newBankSound( bank_objects[i], OBJECT_NAMES[i] );
     }
 }

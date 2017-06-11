@@ -17,7 +17,6 @@ class Tile
     public:
         Tile( u32 ID,
               IMeshSceneNode* NODE,
-              IParticleSystemSceneNode* PARTICLE_NODE,
               u32 HIDDEN_OBJECT );
         virtual ~Tile();
         u32 get_id();
@@ -36,12 +35,10 @@ class Tile
         u32                       hidden_object;
         u32                       id;
         IMeshSceneNode*           node;
-        IParticleSystemSceneNode* particle_node;
         TileState                 state;
         
         void initialize( u32 ID,
                          IMeshSceneNode* NODE,
-                         IParticleSystemSceneNode* PARTICLE_NODE,
                          u32 HIDDEN_OBJECT );
 };
 

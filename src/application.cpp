@@ -34,11 +34,11 @@ bool Application::OnEvent( const SEvent& EVENT )
                             tiles[button_id]->reveal_object( textures_hidden[tiles[button_id]->get_hidden_object()] );
                             selection[selection_state] = button_id;
                             selection_state ++;
-                            was_handled = true;
                             if( selection_state == TWO_TILES )
                             {
                                 check_for_match();
                             }
+                            was_handled = true;
                         }
                     }
                     break;                    
@@ -111,7 +111,8 @@ void Application::check_for_match()
         matches ++;
         if( matches == OBJECT_TOTAL )
         {
-            start_timer( WIN_DELAY );            
+            start_timer( WIN_DELAY );    
+            sound->play( COMPLETED );
         }
         else
         {
@@ -291,7 +292,6 @@ void Application::initialize_tiles()
                                                                      i,
                                                                      vector3df( x, y, ( TILE_Z + z_offset ) ),
                                                                      vector3df( 0, 0, 180.0 ) ), // Blender flipped the .3ds z-axis
-                                    scene_manager->addParticleSystemSceneNode( false ),
                                     hidden_objects[i] ),
                           i ); 
             tiles[i]->get_node()->setMaterialType( EMT_TRANSPARENT_ALPHA_CHANNEL );
@@ -376,7 +376,7 @@ void Application::reset_game()
 
 void Application::shuffle( u32 ARRAY[], u32 SIZE )
 {
-    //srand( time( NULL ) );
+    srand( time( NULL ) );
  
     for( u32 i = SIZE - 1; i > 0; i -- )
     {

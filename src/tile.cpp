@@ -6,10 +6,9 @@
 
 Tile::Tile( u32 ID,
             IMeshSceneNode* NODE,
-            IParticleSystemSceneNode* PARTICLE_NODE,
             u32 HIDDEN_OBJECT )
 {
-    initialize( ID, NODE, PARTICLE_NODE, HIDDEN_OBJECT );
+    initialize( ID, NODE, HIDDEN_OBJECT );
 }
 
 Tile::~Tile()
@@ -83,17 +82,11 @@ void Tile::set_state( TileState TILE_STATE )
 
 void Tile::initialize( u32 ID,
                        IMeshSceneNode* NODE,
-                       IParticleSystemSceneNode* PARTICLE_NODE,
                        u32 HIDDEN_OBJECT )
 {
     id = ID;
     node = NODE;
-    particle_node = PARTICLE_NODE;
     hidden_object = HIDDEN_OBJECT;
-    
     state = DISABLED;
     button = NULL;
-    
-    particle_node->setParent( node );
-    particle_node->setEmitter( particle_node->createPointEmitter( vector3df( 0.0, 0.05, -0.05 ) ) );
 }

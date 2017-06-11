@@ -17,17 +17,44 @@
 #define COLOR_BROWN       SColor( 255, 127,  63,   0 )
 #define COLOR_DEVGRAY     SColor( 255,  55,  57,  54 )
 
-// Files - Assets - Images
-#define IMAGE_BACKGROUND "background.png"
-#define IMAGE_TILE       "barn.png"
-
 // Files - Assets - Meshes
 #define MESH_BACKGROUND "plane_1920x1200.3ds"
 #define MESH_TILE       "plane_256x256.3ds"
 
-// Files - Assets - Sounds
-#define SOUND_NO_MATCH    "banjo.ckb"
-#define SOUND_SELECT_TILE "barn.ckb"
+// Background Image Files
+const static char* IMAGES_BACKGROUND[] =
+{
+    "pasture.png", // FARM Theme
+    "space.png"    // SPACE Theme
+};
+
+// Tile Image Files
+const static char* IMAGES_TILE[] =
+{
+    "barn.png",    // FARM Theme
+    "asteroid.png" // SPACE Theme
+};
+
+// Completed Sound Files
+const static char* COMPLETED_SOUNDS[] =
+{
+    "fiddle.ckb", // FARM Theme
+    "2001.ckb"    // SPACE Theme
+};
+
+// No Match Sound Files
+const static char* NO_MATCH_SOUNDS[] =
+{
+    "banjo.ckb", // FARM Theme
+    "claxon.ckb" // SPACE Theme
+};
+
+// Select Tile Sound Files
+const static char* SELECT_TILE_SOUNDS[] =
+{
+    "barn.ckb", // FARM Theme
+    "laser.ckb" // SPACE Theme
+};
 
 // Graphics Properties
 #define DRIVER_TYPE    EDT_OGLES1
@@ -38,33 +65,60 @@
 #define ANTI_ALIASING  0
 
 // Hidden Object Image Files
-const static char* OBJECT_IMAGES[] =
+const static char* OBJECT_IMAGES[][] =
 {
-    "cat.png",
-    "dog.png",
-    "duck.png",
-    "horse.png",
-    "pig.png"
+    {   // FARM Theme
+        "cat.png",
+        "dog.png",
+        "duck.png",
+        "horse.png",
+        "pig.png"
+    },
+    {   // SPACE Theme
+        "planet.png",
+        "shuttle.png",
+        "comet.png",
+        "astronaut.png",
+        "alien.png"
+    }
 };
 
 // Hidden Object Sound Names
-const static char* OBJECT_NAMES[] =
+const static char* OBJECT_NAMES[][] =
 {
-    "cat",
-    "dog",
-    "duck",
-    "horse",
-    "pig"
+    {   // FARM Theme
+        "cat",
+        "dog",
+        "duck",
+        "horse",
+        "pig"
+    },
+    {   // SPACE Theme
+        "planet",
+        "shuttle",
+        "comet",
+        "astronaut",
+        "alien"
+    }
 };
 
 // Hidden Object Sound Files
-const static char* OBJECT_SOUNDS[] =
+const static char* OBJECT_SOUNDS[][] =
 {
-    "cat.ckb",
-    "dog.ckb",
-    "duck.ckb",
-    "horse.ckb",
-    "pig.ckb"
+    {   // FARM Theme
+        "cat.ckb",
+        "dog.ckb",
+        "duck.ckb",
+        "horse.ckb",
+        "pig.ckb"
+    },
+    {   // SPACE Theme
+        "planet.ckb",
+        "shuttle.ckb",
+        "comet.ckb",
+        "astronaut.ckb",
+        "alien.ckb"
+    }
 };
 
 // Misc Settings & Values
@@ -89,8 +143,13 @@ enum SoundEffect
 {
     SELECT_TILE,
     NO_MATCH,
-    GOT_MATCH
+    GOT_MATCH,
+    COMPLETED
 };
+
+// Themes
+#define FARM  0
+#define SPACE 1
 
 // Tile State - Enumeration
 enum TileState
