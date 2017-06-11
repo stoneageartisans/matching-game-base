@@ -4,9 +4,9 @@
  * Public Methods
  */
 
-Sound::Sound( android_app* ANDROID_APP )
+Sound::Sound( android_app* ANDROID_APP, u32 CURRENT_THEME )
 {
-    initialize( ANDROID_APP );
+    initialize( ANDROID_APP, CURRENT_THEME );
 }
 
 Sound::~Sound()
@@ -62,23 +62,23 @@ void Sound::dispose()
     bank_select_tile->destroy();
 }
 
-void Sound::initialize( android_app* ANDROID_APP )
+void Sound::initialize( android_app* ANDROID_APP, u32 CURRENT_THEME )
 {
     CkConfig config( ANDROID_APP->activity->vm, ANDROID_APP->activity->clazz );
     CkInit( &config );
     
-    bank_completed = CkBank::newBank( SOUND_COMPLETED );
+    bank_completed = CkBank::newBank( SOUNDS_COMPLETED[CURRENT_THEME] );
     sound_completed = CkSound::newBankSound( bank_completed, "fiddle" );
     
-    bank_no_match = CkBank::newBank( SOUND_NO_MATCH );
+    bank_no_match = CkBank::newBank( SOUNDS_NO_MATCH[CURRENT_THEME] );
     sound_no_match = CkSound::newBankSound( bank_no_match, "banjo" );
             
-    bank_select_tile = CkBank::newBank( SOUND_SELECT_TILE );
+    bank_select_tile = CkBank::newBank( SOUNDS_SELECT_TILE[CURRENT_THEME] );
     sound_select_tile = CkSound::newBankSound( bank_select_tile, "barn" );
     
     for( int i = 0; i < OBJECT_TOTAL; i ++ )
     {
-        bank_objects[i] = CkBank::newBank( OBJECT_SOUNDS[i] );
-        sound_objects[i] = CkSound::newBankSound( bank_objects[i], OBJECT_NAMES[i] );
+        bank_objects[i] = CkBank::newBank( OBJECT_SOUNDS[CURRENT_THEME][i] );
+        sound_objects[i] = CkSound::newBankSound( bank_objects[i], OBJECT_NAMES[CURRENT_THEME][i] );
     }
 }

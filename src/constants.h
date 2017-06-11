@@ -17,9 +17,29 @@
 #define COLOR_BROWN       SColor( 255, 127,  63,   0 )
 #define COLOR_DEVGRAY     SColor( 255,  55,  57,  54 )
 
+// Graphics Properties
+#define DRIVER_TYPE    EDT_OGLES1
+#define SCREEN_WIDTH   0
+#define SCREEN_HEIGHT  0
+#define SCREEN_SIZE    dimension2d<u32>( SCREEN_WIDTH, SCREEN_HEIGHT )
+#define BIT_DEPTH      24
+#define ANTI_ALIASING  0
+
 // Files - Assets - Meshes
 #define MESH_BACKGROUND "plane_1920x1200.3ds"
 #define MESH_TILE       "plane_256x256.3ds"
+
+// Themes
+#define FARM   0
+#define SPACE  1
+#define THEMES 2
+
+// Misc Settings & Values
+#define LIGHT_RADIUS   3000
+#define COMPARE_DELAY  2000
+#define NO_ID            -1
+#define OBJECT_TOTAL      5
+#define WIN_DELAY      3000
 
 // Background Image Files
 const static char* IMAGES_BACKGROUND[] =
@@ -36,36 +56,28 @@ const static char* IMAGES_TILE[] =
 };
 
 // Completed Sound Files
-const static char* COMPLETED_SOUNDS[] =
+const static char* SOUNDS_COMPLETED[] =
 {
     "fiddle.ckb", // FARM Theme
     "2001.ckb"    // SPACE Theme
 };
 
 // No Match Sound Files
-const static char* NO_MATCH_SOUNDS[] =
+const static char* SOUNDS_NO_MATCH[] =
 {
     "banjo.ckb", // FARM Theme
     "claxon.ckb" // SPACE Theme
 };
 
 // Select Tile Sound Files
-const static char* SELECT_TILE_SOUNDS[] =
+const static char* SOUNDS_SELECT_TILE[] =
 {
     "barn.ckb", // FARM Theme
     "laser.ckb" // SPACE Theme
 };
 
-// Graphics Properties
-#define DRIVER_TYPE    EDT_OGLES1
-#define SCREEN_WIDTH   0
-#define SCREEN_HEIGHT  0
-#define SCREEN_SIZE    dimension2d<u32>( SCREEN_WIDTH, SCREEN_HEIGHT )
-#define BIT_DEPTH      24
-#define ANTI_ALIASING  0
-
 // Hidden Object Image Files
-const static char* OBJECT_IMAGES[][] =
+const static char* OBJECT_IMAGES[THEMES][OBJECT_TOTAL] =
 {
     {   // FARM Theme
         "cat.png",
@@ -84,7 +96,7 @@ const static char* OBJECT_IMAGES[][] =
 };
 
 // Hidden Object Sound Names
-const static char* OBJECT_NAMES[][] =
+const static char* OBJECT_NAMES[THEMES][OBJECT_TOTAL] =
 {
     {   // FARM Theme
         "cat",
@@ -103,7 +115,7 @@ const static char* OBJECT_NAMES[][] =
 };
 
 // Hidden Object Sound Files
-const static char* OBJECT_SOUNDS[][] =
+const static char* OBJECT_SOUNDS[THEMES][OBJECT_TOTAL] =
 {
     {   // FARM Theme
         "cat.ckb",
@@ -120,13 +132,6 @@ const static char* OBJECT_SOUNDS[][] =
         "alien.ckb"
     }
 };
-
-// Misc Settings & Values
-#define LIGHT_RADIUS   3000
-#define COMPARE_DELAY  2000
-#define NO_ID            -1
-#define OBJECT_TOTAL      5
-#define WIN_DELAY      3000
 
 // Selection States
 #define NO_TILES  0
@@ -146,10 +151,6 @@ enum SoundEffect
     GOT_MATCH,
     COMPLETED
 };
-
-// Themes
-#define FARM  0
-#define SPACE 1
 
 // Tile State - Enumeration
 enum TileState

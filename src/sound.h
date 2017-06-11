@@ -20,7 +20,7 @@ using namespace gui;
 class Sound
 {
     public:
-        Sound( android_app* ANDROID_APP );
+        Sound( android_app* ANDROID_APP, u32 CURRENT_THEME );
         virtual ~Sound();
         void play( SoundEffect SOUND_EFFECT, int INDEX = -1 ); 
         void update();
@@ -36,7 +36,7 @@ class Sound
         CkSound* sound_select_tile;
         
         void dispose();
-        void initialize( android_app* ANDROID_APP );
+        void initialize( android_app* ANDROID_APP, u32 CURRENT_THEME );
 };
 
 #endif /* SOUND_H */

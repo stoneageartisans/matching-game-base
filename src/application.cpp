@@ -176,13 +176,13 @@ void Application::initialize_assets()
 {
     video_driver->setTextureCreationFlag( ETCF_CREATE_MIP_MAPS, false );
     
-    texture_background = video_driver->getTexture( IMAGE_BACKGROUND );
-    texture_tile = video_driver->getTexture( IMAGE_TILE );
+    texture_background = video_driver->getTexture( IMAGES_BACKGROUND[current_theme] );
+    texture_tile = video_driver->getTexture( IMAGES_TILE[current_theme] );
     
     u32 total = ( u32 ) OBJECT_TOTAL;
     for( u32 i = 0; i < total; i ++ )
     {
-        textures_hidden[i] = video_driver->getTexture( OBJECT_IMAGES[i] );
+        textures_hidden[i] = video_driver->getTexture( OBJECT_IMAGES[current_theme][i] );
     }
 }
 
@@ -256,7 +256,7 @@ void Application::initialize_irrlicht( android_app* ANDROID_APP )
 
 void Application::initialize_sound( android_app* ANDROID_APP )
 {
-    sound = new Sound( ANDROID_APP );
+    sound = new Sound( ANDROID_APP, current_theme );
 }
 
 void Application::initialize_tiles()
@@ -311,6 +311,7 @@ void Application::initialize_values()
 {
     color_background = COLOR_BLACK;
     color_white = COLOR_WHITE;
+    current_theme = FARM;
     touch_held_down = false;
     matches = 0;
     selection_state = NO_TILES;

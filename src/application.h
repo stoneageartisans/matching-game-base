@@ -27,6 +27,7 @@ class Application : public IEventReceiver
         ICameraSceneNode* camera;
         SColor            color_background;
         SColor            color_white;
+        u32               current_theme;
         dimension2d<u32>* dimension_screen;
         IGUIEnvironment*  gui_environment;
         ITexture*         textures_hidden[OBJECT_TOTAL];
