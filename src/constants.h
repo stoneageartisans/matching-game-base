@@ -66,7 +66,7 @@ const static char* SOUNDS_COMPLETED[] =
 const static char* SOUNDS_NO_MATCH[] =
 {
     "banjo.ckb", // FARM Theme
-    "claxon.ckb" // SPACE Theme
+    "klaxon.ckb" // SPACE Theme
 };
 
 // Select Tile Sound Files
@@ -88,8 +88,8 @@ const static char* OBJECT_IMAGES[THEMES][OBJECT_TOTAL] =
     },
     {   // SPACE Theme
         "planet.png",
-        "shuttle.png",
-        "comet.png",
+        "rocket.png",
+        "satellite.png",
         "astronaut.png",
         "alien.png"
     }
@@ -107,8 +107,8 @@ const static char* OBJECT_NAMES[THEMES][OBJECT_TOTAL] =
     },
     {   // SPACE Theme
         "planet",
-        "shuttle",
-        "comet",
+        "rocket",
+        "satellite",
         "astronaut",
         "alien"
     }
@@ -126,8 +126,8 @@ const static char* OBJECT_SOUNDS[THEMES][OBJECT_TOTAL] =
     },
     {   // SPACE Theme
         "planet.ckb",
-        "shuttle.ckb",
-        "comet.ckb",
+        "rocket.ckb",
+        "satellite.ckb",
         "astronaut.ckb",
         "alien.ckb"
     }
@@ -167,7 +167,7 @@ enum TileState
 #define TILE_X_OFFSET      320.0
 #define TILE_X_START      -640.0
 #define TILE_Y_OFFSET      400.0
-#define TILE_Y_START       280.0
+#define TILE_Y_START       200.0
 #define TOTAL_TILES         10
 
 // XY Values

@@ -174,8 +174,6 @@ void Application::initialize( android_app* ANDROID_APP )
 
 void Application::initialize_assets()
 {
-    video_driver->setTextureCreationFlag( ETCF_CREATE_MIP_MAPS, false );
-    
     texture_background = video_driver->getTexture( IMAGES_BACKGROUND[current_theme] );
     texture_tile = video_driver->getTexture( IMAGES_TILE[current_theme] );
     
@@ -247,6 +245,8 @@ void Application::initialize_irrlicht( android_app* ANDROID_APP )
     video_driver = irrlicht_device->getVideoDriver();
     scene_manager = irrlicht_device->getSceneManager();
     gui_environment = irrlicht_device->getGUIEnvironment();
+    
+    video_driver->setTextureCreationFlag( ETCF_CREATE_MIP_MAPS, false );
     
     screen_width = video_driver->getScreenSize().Width;
     screen_height = video_driver->getScreenSize().Height;
@@ -348,7 +348,17 @@ void Application::initialize_widgets()
 }
 
 void Application::reset_game()
-{            
+{
+    current_theme ++;
+    if( current_theme == THEMES )
+    {
+        current_theme = 0;
+    }
+    
+    initialize_assets();
+    node_background->setMaterialTexture( 0, texture_background );
+    sound->load_theme( current_theme );
+    
     matches = 0;
     selection_state = NO_TILES;
     selection[FIRST] = NO_ID;

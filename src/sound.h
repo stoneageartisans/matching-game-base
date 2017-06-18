@@ -22,7 +22,8 @@ class Sound
     public:
         Sound( android_app* ANDROID_APP, u32 CURRENT_THEME );
         virtual ~Sound();
-        void play( SoundEffect SOUND_EFFECT, int INDEX = -1 ); 
+        void load_theme( u32 CURRENT_THEME );
+        void play( SoundEffect SOUND_EFFECT, int INDEX = -1 );
         void update();
         
     private:

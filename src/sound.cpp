@@ -15,6 +15,24 @@ Sound::~Sound()
     CkShutdown();
 }
 
+void Sound::load_theme( u32 CURRENT_THEME )
+{
+    bank_completed = CkBank::newBank( SOUNDS_COMPLETED[CURRENT_THEME] );
+    sound_completed = CkSound::newBankSound( bank_completed, 0 );
+    
+    bank_no_match = CkBank::newBank( SOUNDS_NO_MATCH[CURRENT_THEME] );
+    sound_no_match = CkSound::newBankSound( bank_no_match, 0 );
+            
+    bank_select_tile = CkBank::newBank( SOUNDS_SELECT_TILE[CURRENT_THEME] );
+    sound_select_tile = CkSound::newBankSound( bank_select_tile, 0 );
+    
+    for( int i = 0; i < OBJECT_TOTAL; i ++ )
+    {
+        bank_objects[i] = CkBank::newBank( OBJECT_SOUNDS[CURRENT_THEME][i] );
+        sound_objects[i] = CkSound::newBankSound( bank_objects[i], 0 );
+    }
+}
+
 void Sound::play( SoundEffect SOUND_EFFECT, int INDEX )
 {
     switch( SOUND_EFFECT )
@@ -68,13 +86,13 @@ void Sound::initialize( android_app* ANDROID_APP, u32 CURRENT_THEME )
     CkInit( &config );
     
     bank_completed = CkBank::newBank( SOUNDS_COMPLETED[CURRENT_THEME] );
-    sound_completed = CkSound::newBankSound( bank_completed, "fiddle" );
+    sound_completed = CkSound::newBankSound( bank_completed, 0 );
     
     bank_no_match = CkBank::newBank( SOUNDS_NO_MATCH[CURRENT_THEME] );
-    sound_no_match = CkSound::newBankSound( bank_no_match, "banjo" );
+    sound_no_match = CkSound::newBankSound( bank_no_match, 0 );
             
     bank_select_tile = CkBank::newBank( SOUNDS_SELECT_TILE[CURRENT_THEME] );
-    sound_select_tile = CkSound::newBankSound( bank_select_tile, "barn" );
+    sound_select_tile = CkSound::newBankSound( bank_select_tile, 0 );
     
     for( int i = 0; i < OBJECT_TOTAL; i ++ )
     {
