@@ -1,0 +1,5 @@
+- Add different themes
+
+- Add "explosion" animation
+
+- 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+	package="com.stoneageartisans.matchinggamebase"
+	android:versionCode="1"
+	android:versionName="1.0">
+	<uses-sdk android:minSdkVersion="10"/>
+	<uses-feature android:glEsVersion="0x00010000" android:required="true"/>
+	<application android:icon="@drawable/app_icon" android:label="Matching Game Base" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:debuggable="true">
+        <activity android:name="android.app.NativeActivity"
+		android:label="IrrlichtBase"
+		android:launchMode="singleTask"
+		android:configChanges="orientation|keyboardHidden"
+		android:screenOrientation="landscape"
+		android:clearTaskOnLaunch="true">
+		<meta-data android:name="android.app.lib_name" android:value="MatchingGameBase" />
+		<intent-filter>
+                	<action android:name="android.intent.action.MAIN" />
+                	<category android:name="android.intent.category.LAUNCHER" />
+		</intent-filter>
+	</activity>
+	</application>
+</manifest> 

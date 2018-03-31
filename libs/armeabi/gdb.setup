@@ -1,0 +1,2 @@
+set solib-search-path ./obj/local/armeabi
+directory /home/daddy/Android/Sdk/ndk-bundle/platforms/android-9/arch-arm ../../include /home/daddy/Android/Sdk/ndk-bundle/sources/android/native_app_glue /home/daddy/Android/Sdk/ndk-bundle/sources/cxx-stl/system/include jni/..
